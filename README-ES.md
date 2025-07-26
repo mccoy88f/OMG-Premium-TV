@@ -77,11 +77,15 @@ Para detalles completos sobre el funcionamiento de las nuevas funcionalidades, c
 
 ### 📋 Configuración de la lista de reproducción
 - **URL M3U** 📋: Introduce la URL de tu lista de reproducción M3U/M3U8
-  - *Ejemplo*: `http://example.com/playlist.m3u`
+  - *Ejemplo único*: `http://example.com/playlist.m3u`
+  - *Ejemplo múltiple*: `http://example.com/playlist1.m3u,http://example.com/playlist2.m3u`
+  - 💡 **Novedad**: Puedes introducir múltiples URLs M3U separándolas con comas (,) para combinar varias listas de reproducción
 
 ### 📊 Configuración EPG
 - **URL EPG** 📊: Introduce la URL del archivo EPG (guía electrónica de programas)
-  - *Ejemplo*: `http://example.com/epg.xml` o `http://example.com/epg.xml.gz`
+  - *Ejemplo único*: `http://example.com/epg.xml` o `http://example.com/epg.xml.gz`
+  - *Ejemplo múltiple*: `http://example.com/epg1.xml,http://example.com/epg2.xml`
+  - 💡 **Novedad**: Puedes introducir múltiples URLs EPG separándolas con comas (,) para combinar varias guías de programas
 - **Habilitar EPG** ✅: Marca esta casilla para visualizar la información sobre los programas
 
 ## 🔍 Uso del addon

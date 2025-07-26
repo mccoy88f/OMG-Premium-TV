@@ -245,18 +245,44 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                    <h2>Genera Configurazione</h2>
                    <form id="configForm" onsubmit="updateConfig(event)">
                        <label>M3U URL:</label>
-                       <input type="url" name="m3u" 
+                       <input type="text" name="m3u" 
                               value="${m3uIsDisabled ? m3uDefaultUrl : (query.m3u || '')}" 
                               ${m3uIsDisabled ? 'readonly' : ''} 
+                              placeholder="https://example.com/playlist1.m3u,https://example.com/playlist2.m3u"
                               required>
+                       <small style="color: #999; display: block; margin-top: 5px;">
+                           💡 Puoi inserire più URL M3U separandoli con una virgola (,)
+                       </small>
                        
                        <label>EPG URL:</label>
-                       <input type="url" name="epg" value="${query.epg || ''}">
+                       <input type="text" name="epg" 
+                              value="${query.epg || ''}"
+                              placeholder="https://example.com/epg1.xml,https://example.com/epg2.xml">
+                       <small style="color: #999; display: block; margin-top: 5px;">
+                           💡 Puoi inserire più URL EPG separandoli con una virgola (,)
+                       </small>
                        
                        <label>
                            <input type="checkbox" name="epg_enabled" ${query.epg_enabled === 'true' ? 'checked' : ''}>
                            Abilita EPG
                        </label>
+
+                       <label>Lingua Canali:</label>
+                       <select name="language" style="width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #666; background: #333; color: white;">
+                           <option value="Italiano" ${(query.language || 'Italiano') === 'Italiano' ? 'selected' : ''}>Italiano</option>
+                           <option value="English" ${query.language === 'English' ? 'selected' : ''}>English</option>
+                           <option value="Español" ${query.language === 'Español' ? 'selected' : ''}>Español</option>
+                           <option value="Français" ${query.language === 'Français' ? 'selected' : ''}>Français</option>
+                           <option value="Deutsch" ${query.language === 'Deutsch' ? 'selected' : ''}>Deutsch</option>
+                           <option value="Português" ${query.language === 'Português' ? 'selected' : ''}>Português</option>
+                           <option value="Nederlands" ${query.language === 'Nederlands' ? 'selected' : ''}>Nederlands</option>
+                           <option value="Polski" ${query.language === 'Polski' ? 'selected' : ''}>Polski</option>
+                           <option value="Русский" ${query.language === 'Русский' ? 'selected' : ''}>Русский</option>
+                           <option value="العربية" ${query.language === 'العربية' ? 'selected' : ''}>العربية</option>
+                           <option value="中文" ${query.language === '中文' ? 'selected' : ''}>中文</option>
+                           <option value="日本語" ${query.language === '日本語' ? 'selected' : ''}>日本語</option>
+                           <option value="한국어" ${query.language === '한국어' ? 'selected' : ''}>한국어</option>
+                       </select>
 
                        <div class="advanced-settings">
                            <div class="advanced-settings-header" onclick="toggleAdvancedSettings()">

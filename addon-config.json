@@ -3,5 +3,6 @@
     "addonId": "org.mccoy88f.omgpremiumtv",
     "addonDescription": "Addon per Stremio che ti permette di guardare i tuoi canali TV e IPTV preferiti da playlist M3U/M3U8, arricchiti con informazioni sui programmi (EPG)",
     "addonVersion": "6.0.0",
-    "addonLogo": "https://raw.githubusercontent.com/mccoy88f/OMG-Plus-TV-Stremio-Addon/refs/heads/main/tv.png"
+    "addonLogo": "https://raw.githubusercontent.com/mccoy88f/OMG-Plus-TV-Stremio-Addon/refs/heads/main/tv.png",
+    "defaultLanguage": "Italiana"
 }

@@ -4,6 +4,9 @@ const EPGManager = require('./epg-manager');
 const StreamProxyManager = require('./stream-proxy-manager')(config);
 const ResolverStreamManager = require('./resolver-stream-manager')(config);
 
+function getLanguageFromConfig(userConfig) {
+    return userConfig.language || config.defaultLanguage || 'Italiana';
+}
 
 function normalizeId(id) {
     return id?.toLowerCase().replace(/[^\w.]/g, '').trim() || '';
@@ -101,11 +104,13 @@ async function catalogHandler({ type, id, extra, config: userConfig }) {
             const displayName = cleanNameForImage(channel.name);
             const encodedName = encodeURIComponent(displayName).replace(/%20/g, '+');
             const fallbackLogo = `https://dummyimage.com/500x500/590b8a/ffffff.jpg&text=${encodedName}`;
+            const language = getLanguageFromConfig(userConfig);
+            const languageAbbr = language.substring(0, 3).toUpperCase();
             
             const meta = {
                 id: channel.id,
                 type: 'tv',
-                name: channel.name,
+                name: `${channel.name} [${languageAbbr}]`,
                 poster: channel.poster || fallbackLogo,
                 background: channel.background || fallbackLogo,
                 logo: channel.logo || fallbackLogo,
@@ -121,7 +126,7 @@ async function catalogHandler({ type, id, extra, config: userConfig }) {
             };
 
             if (channel.streamInfo?.tvg?.chno) {
-                meta.name = `${channel.streamInfo.tvg.chno}. ${channel.name}`;
+                meta.name = `${channel.streamInfo.tvg.chno}. ${channel.name} [${languageAbbr}]`;
             }
 
             if ((!meta.poster || !meta.background || !meta.logo) && channel.streamInfo?.tvg?.id) {
@@ -402,11 +407,13 @@ async function processOriginalStreams(originalStreamDetails, channel, userConfig
     } else {
         // Aggiungi prima gli stream originali
         for (const streamDetails of originalStreamDetails) {
+            const language = getLanguageFromConfig(userConfig);
             const streamMeta = {
                 name: streamDetails.name,
-                title: `📺 ${streamDetails.originalName || streamDetails.name}`,
+                title: `📺 ${streamDetails.originalName || streamDetails.name} [${language.substring(0, 3).toUpperCase()}]`,
                 url: streamDetails.url,
                 headers: streamDetails.headers,
+                language: language,
                 behaviorHints: {
                     notWebReady: false,
                     bingeGroup: "tv"

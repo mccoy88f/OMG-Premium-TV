@@ -345,14 +345,37 @@ class PlaylistTransformer {
       try {
           await this.loadRemappingRules(config);
           
-          const response = await axios.get(url);
-          const content = response.data;
-          const playlistUrls = content.startsWith('#EXTM3U') 
-              ? [url] 
-              : content.split('\n').filter(line => line.trim() && line.startsWith('http'));
-
+          // Supporto per URL multipli separati da virgola
+          const urlList = url.split(',').map(u => u.trim()).filter(u => u);
           console.log('\n=== Inizio Processamento Playlist ===');
-          console.log('Playlist da processare:', playlistUrls.length);
+          console.log('URL M3U forniti:', urlList.length);
+          
+          let playlistUrls = [];
+          
+          // Processa ogni URL fornito
+          for (const singleUrl of urlList) {
+              console.log('Controllo URL:', singleUrl);
+              try {
+                  const response = await axios.get(singleUrl);
+                  const content = response.data;
+                  
+                  if (content.startsWith('#EXTM3U')) {
+                      // È un file M3U diretto
+                      playlistUrls.push(singleUrl);
+                      console.log('✓ File M3U diretto trovato:', singleUrl);
+                  } else {
+                      // È una lista di URL
+                      const urls = content.split('\n').filter(line => line.trim() && line.startsWith('http'));
+                      playlistUrls.push(...urls);
+                      console.log('✓ Lista URL trovata, contiene', urls.length, 'playlist');
+                  }
+              } catch (error) {
+                  console.error('❌ Errore nel processare URL:', singleUrl, error.message);
+                  // Continua con gli altri URL anche se uno fallisce
+              }
+          }
+
+          console.log('Playlist totali da processare:', playlistUrls.length);
 
           const allGenres = [];
           const allEpgUrls = new Set();

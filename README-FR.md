@@ -77,11 +77,15 @@ Pour des détails complets sur le fonctionnement des nouvelles fonctionnalités,
 
 ### 📋 Configuration de la playlist
 - **URL M3U** 📋 : Entrez l'URL de votre playlist M3U/M3U8
-  - *Exemple* : `http://example.com/playlist.m3u`
+  - *Exemple unique* : `http://example.com/playlist.m3u`
+  - *Exemple multiple* : `http://example.com/playlist1.m3u,http://example.com/playlist2.m3u`
+  - 💡 **Nouveauté** : Vous pouvez entrer plusieurs URL M3U séparées par des virgules (,) pour combiner plusieurs playlists
 
 ### 📊 Configuration EPG
 - **URL EPG** 📊 : Entrez l'URL du fichier EPG (guide électronique des programmes)
-  - *Exemple* : `http://example.com/epg.xml` ou `http://example.com/epg.xml.gz`
+  - *Exemple unique* : `http://example.com/epg.xml` ou `http://example.com/epg.xml.gz`
+  - *Exemple multiple* : `http://example.com/epg1.xml,http://example.com/epg2.xml`
+  - �� **Nouveauté** : Vous pouvez entrer plusieurs URL EPG séparées par des virgules (,) pour combiner plusieurs guides de programmes
 - **Activer EPG** ✅ : Cochez cette case pour afficher les informations sur les programmes
 
 ## 🔍 Utilisation de l'addon
