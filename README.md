@@ -15,7 +15,7 @@ Un caffè ☕ o una birra sono 🍺 un gesto di riconoscenza molto apprezzato e 
 
 **Con una donazione verrai inserito in un gruppo telegram dedicato dove riceverai in anteprima le nuove versioni! Ti aspetto!**
 
-<a href="https://www.buymeacoffee.com/mccoy88f"><img src="https://img.buymeacoffee.com/button-api/?text=Offrimi una birra&emoji=🍺&slug=mccoy88f&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" /></a>
+<a href="https://www.buymeacoffee.com/mccoy88f"><img src="https://img.buymeacoffee.com/button-api/?text=Offrimi%20una%20birra&emoji=%F0%9F%8D%BA&slug=mccoy88f&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 [Puoi anche offrirmi una birra con PayPal 🍻](https://paypal.me/mccoy88f?country.x=IT&locale.x=it_IT)
 
