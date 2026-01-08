@@ -1,9 +1,10 @@
-version: "3.8"
-
 services:
   omg-premium-tv:
-    image: node:20-slim
-    container_name: omg-premium-tv
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: omg-premium-tv:local
+    container_name: tv
     restart: unless-stopped
     working_dir: /app
     environment:
