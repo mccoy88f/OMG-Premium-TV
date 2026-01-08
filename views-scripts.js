@@ -112,7 +112,7 @@ const getViewScripts = (protocol, host) => {
             const file = event.target.files[0];
             if (!file) return;
         
-            showLoader('Ripristino configurazione in corso...');
+            showLoader('Restoring configuration...');
             
             const reader = new FileReader();
             reader.onload = async function(e) {
@@ -177,7 +177,7 @@ const getViewScripts = (protocol, host) => {
         
                         const downloadData = await downloadResponse.json();
                         if (!downloadData.success) {
-                            throw new Error('Download dello script fallito');
+                            throw new Error('Failed to download the script');
                         }
         
                         // Esegui lo script Python
@@ -193,10 +193,10 @@ const getViewScripts = (protocol, host) => {
         
                         const executeData = await executeResponse.json();
                         if (!executeData.success) {
-                            throw new Error('Esecuzione dello script fallita');
+                            throw new Error('Failed to execute the script');
                         }
         
-                        alert('Script Python scaricato ed eseguito con successo!');
+                        alert('Python script downloaded and executed successfully!');
                         showM3uUrl(executeData.m3uUrl);
                     }
         
@@ -230,13 +230,13 @@ const getViewScripts = (protocol, host) => {
                             
                             const rebuildResult = await rebuildResponse.json();
                             if (rebuildResult.success) {
-                                alert('Configurazione ripristinata e ricostruzione cache avviata!');
+                                alert('Configuration restored and cache rebuild started!');
                             } else {
-                                alert('Configurazione ripristinata ma errore nella ricostruzione: ' + rebuildResult.message);
+                                alert('Configuration restored but rebuild error: ' + rebuildResult.message);
                             }
                         } catch (rebuildError) {
                             console.error('Errore rebuild:', rebuildError);
-                            alert('Configurazione ripristinata ma errore nella ricostruzione della cache');
+                            alert('Configuration restored but cache rebuild failed');
                         }
                     }
         
@@ -250,7 +250,7 @@ const getViewScripts = (protocol, host) => {
                 } catch (error) {
                     hideLoader();
                     console.error('Errore:', error);
-                    alert('Errore nel caricamento del file di configurazione: ' + error.message);
+                    alert('Error loading configuration file: ' + error.message);
                 }
             };
             reader.readAsText(file);
@@ -264,21 +264,21 @@ const getViewScripts = (protocol, host) => {
             statusEl.style.display = 'block';
             
             let html = '<table style="width: 100%; text-align: left;">';
-            html += '<tr><td><strong>In Esecuzione:</strong></td><td>' + (data.isRunning ? 'Sì' : 'No') + '</td></tr>';
-            html += '<tr><td><strong>Ultima Esecuzione:</strong></td><td>' + data.lastExecution + '</td></tr>';
-            html += '<tr><td><strong>Script Esistente:</strong></td><td>' + (data.scriptExists ? 'Sì' : 'No') + '</td></tr>';
-            html += '<tr><td><strong>File M3U Esistente:</strong></td><td>' + (data.m3uExists ? 'Sì' : 'No') + '</td></tr>';
+            html += '<tr><td><strong>Running:</strong></td><td>' + (data.isRunning ? 'Yes' : 'No') + '</td></tr>';
+            html += '<tr><td><strong>Last Run:</strong></td><td>' + data.lastExecution + '</td></tr>';
+            html += '<tr><td><strong>Script Present:</strong></td><td>' + (data.scriptExists ? 'Yes' : 'No') + '</td></tr>';
+            html += '<tr><td><strong>M3U File Present:</strong></td><td>' + (data.m3uExists ? 'Yes' : 'No') + '</td></tr>';
             
             // Aggiungi informazioni sull'aggiornamento pianificato
             if (data.scheduledUpdates) {
-                html += '<tr><td><strong>Aggiornamento Automatico:</strong></td><td>Attivo ogni ' + data.updateInterval + '</td></tr>';
+                html += '<tr><td><strong>Automatic Updates:</strong></td><td>Active every ' + data.updateInterval + '</td></tr>';
             }
             
             if (data.scriptUrl) {
-                html += '<tr><td><strong>URL Script:</strong></td><td>' + data.scriptUrl + '</td></tr>';
+                html += '<tr><td><strong>Script URL:</strong></td><td>' + data.scriptUrl + '</td></tr>';
             }
             if (data.lastError) {
-                html += '<tr><td><strong>Ultimo Errore:</strong></td><td style="color: #ff6666;">' + data.lastError + '</td></tr>';
+                html += '<tr><td><strong>Last Error:</strong></td><td style="color: #ff6666;">' + data.lastError + '</td></tr>';
             }
             html += '</table>';
             
@@ -296,7 +296,7 @@ const getViewScripts = (protocol, host) => {
         async function downloadPythonScript() {
             const url = document.getElementById('pythonScriptUrl').value;
             if (!url) {
-                alert('Inserisci un URL valido per lo script Python');
+                alert('Enter a valid URL for the Python script');
                 return;
             }
             
@@ -304,7 +304,7 @@ const getViewScripts = (protocol, host) => {
             document.getElementById('hidden_python_script_url').value = url;
             
             try {
-                showLoader('Download script Python in corso...');
+                showLoader('Downloading Python script...');
                 
                 const response = await fetch('/api/python-script', {
                     method: 'POST',
@@ -321,21 +321,21 @@ const getViewScripts = (protocol, host) => {
                 hideLoader();
                 
                 if (data.success) {
-                    alert('Script scaricato con successo!');
+                    alert('Script downloaded successfully!');
                 } else {
-                    alert('Errore: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
                 
                 checkPythonStatus();
             } catch (error) {
                 hideLoader();
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
         async function executePythonScript() {
             try {
-                showLoader('Esecuzione script Python in corso...');
+                showLoader('Running Python script...');
                 
                 const response = await fetch('/api/python-script', {
                     method: 'POST',
@@ -351,16 +351,16 @@ const getViewScripts = (protocol, host) => {
                 hideLoader();
                 
                 if (data.success) {
-                    alert('Script eseguito con successo!');
+                    alert('Script executed successfully!');
                     showM3uUrl(data.m3uUrl);
                 } else {
-                    alert('Errore: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
                 
                 checkPythonStatus();
             } catch (error) {
                 hideLoader();
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
@@ -383,7 +383,7 @@ const getViewScripts = (protocol, host) => {
                     showM3uUrl(window.location.origin + '/generated-m3u');
                 }
             } catch (error) {
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
@@ -404,13 +404,13 @@ const getViewScripts = (protocol, host) => {
                 document.getElementById('hidden_python_update_interval').value = updateInterval;
             }
             
-            alert('URL della playlist generata impostato nel campo M3U URL!');
+            alert('Generated playlist URL set in the M3U URL field!');
         }
         
         async function scheduleUpdates() {
             const interval = document.getElementById('updateInterval').value;
             if (!interval) {
-                alert('Inserisci un intervallo valido (es. 12:00)');
+                alert('Enter a valid interval (e.g. 12:00)');
                 return;
             }
             
@@ -433,12 +433,12 @@ const getViewScripts = (protocol, host) => {
                 if (data.success) {
                     alert(data.message);
                 } else {
-                    alert('Errore: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
                 
                 checkPythonStatus();
             } catch (error) {
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
@@ -458,7 +458,7 @@ const getViewScripts = (protocol, host) => {
                 alert(data.message);
                 checkPythonStatus();
             } catch (error) {
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
@@ -470,28 +470,28 @@ const getViewScripts = (protocol, host) => {
             statusEl.style.display = 'block';
             
             let html = '<table style="width: 100%; text-align: left;">';
-            html += '<tr><td><strong>In Esecuzione:</strong></td><td>' + (data.isRunning ? 'Sì' : 'No') + '</td></tr>';
-            html += '<tr><td><strong>Ultima Esecuzione:</strong></td><td>' + data.lastExecution + '</td></tr>';
-            html += '<tr><td><strong>Script Esistente:</strong></td><td>' + (data.scriptExists ? 'Sì' : 'No') + '</td></tr>';
+            html += '<tr><td><strong>Running:</strong></td><td>' + (data.isRunning ? 'Yes' : 'No') + '</td></tr>';
+            html += '<tr><td><strong>Last Run:</strong></td><td>' + data.lastExecution + '</td></tr>';
+            html += '<tr><td><strong>Script Present:</strong></td><td>' + (data.scriptExists ? 'Yes' : 'No') + '</td></tr>';
             
             if (data.resolverVersion) {
-                html += '<tr><td><strong>Versione:</strong></td><td>' + data.resolverVersion + '</td></tr>';
+                html += '<tr><td><strong>Version:</strong></td><td>' + data.resolverVersion + '</td></tr>';
             }
             
             if (data.cacheItems !== undefined) {
-                html += '<tr><td><strong>Item in Cache:</strong></td><td>' + data.cacheItems + '</td></tr>';
+                html += '<tr><td><strong>Cache Items:</strong></td><td>' + data.cacheItems + '</td></tr>';
             }
             
             // Aggiungi informazioni sull'aggiornamento pianificato
             if (data.scheduledUpdates) {
-                html += '<tr><td><strong>Aggiornamento Automatico:</strong></td><td>Attivo ogni ' + data.updateInterval + '</td></tr>';
+                html += '<tr><td><strong>Automatic Updates:</strong></td><td>Active every ' + data.updateInterval + '</td></tr>';
             }
             
             if (data.scriptUrl) {
-                html += '<tr><td><strong>URL Script:</strong></td><td>' + data.scriptUrl + '</td></tr>';
+                html += '<tr><td><strong>Script URL:</strong></td><td>' + data.scriptUrl + '</td></tr>';
             }
             if (data.lastError) {
-                html += '<tr><td><strong>Ultimo Errore:</strong></td><td style="color: #ff6666;">' + data.lastError + '</td></tr>';
+                html += '<tr><td><strong>Last Error:</strong></td><td style="color: #ff6666;">' + data.lastError + '</td></tr>';
             }
             html += '</table>';
             
@@ -532,12 +532,12 @@ const getViewScripts = (protocol, host) => {
             const url = document.querySelector('input[name="resolver_script"]').value;
             
             if (!url) {
-                alert('Inserisci un URL valido nella sezione "Impostazioni Avanzate" → "URL Script Resolver Python"');
+                alert('Enter a valid URL in "Advanced Settings" → "Python Resolver Script URL"');
                 return;
             }
             
             try {
-                showLoader('Download script resolver in corso...');
+                showLoader('Downloading resolver script...');
                 
                 const response = await fetch('/api/resolver', {
                     method: 'POST',
@@ -554,23 +554,23 @@ const getViewScripts = (protocol, host) => {
                 hideLoader();
                 
                 if (data.success) {
-                    alert('Script resolver scaricato con successo!');
+                    alert('Resolver script downloaded successfully!');
                     // Non serve impostare nuovamente l'URL poiché lo leggiamo direttamente dal campo configurazione
                     document.querySelector('input[name="resolver_enabled"]').checked = true;
                 } else {
-                    alert('Errore: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
                 
                 checkResolverStatus();
             } catch (error) {
                 hideLoader();
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
         async function createResolverTemplate() {
             try {
-                showLoader('Creazione template in corso...');
+                showLoader('Creating template...');
                 
                 const response = await fetch('/api/resolver', {
                     method: 'POST',
@@ -586,18 +586,18 @@ const getViewScripts = (protocol, host) => {
                 hideLoader();
                 
                 if (data.success) {
-                    alert('Template dello script resolver creato con successo! Il download inizierà automaticamente.');
+                    alert('Resolver script template created successfully! The download will start automatically.');
                     
                     // Avvia il download automatico
                     window.location.href = '/api/resolver/download-template';
                     
                     checkResolverStatus();
                 } else {
-                    alert('Errore: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
             } catch (error) {
                 hideLoader();
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
@@ -615,14 +615,14 @@ const getViewScripts = (protocol, host) => {
                 
                 const data = await response.json();
                 if (data.success) {
-                    alert('✅ Script resolver verificato con successo!');
+                    alert('✅ Resolver script verified successfully!');
                 } else {
-                    alert('❌ Errore nella verifica dello script: ' + data.message);
+                    alert('❌ Error verifying resolver script: ' + data.message);
                 }
                 
                 checkResolverStatus();
             } catch (error) {
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
@@ -641,7 +641,7 @@ const getViewScripts = (protocol, host) => {
                 const data = await response.json();
                 showResolverStatus(data);
             } catch (error) {
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
@@ -659,26 +659,26 @@ const getViewScripts = (protocol, host) => {
                 
                 const data = await response.json();
                 if (data.success) {
-                    alert('Cache del resolver svuotata con successo!');
+                    alert('Resolver cache cleared successfully!');
                 } else {
-                    alert('Errore: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
                 
                 checkResolverStatus();
             } catch (error) {
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
 
         async function scheduleResolverUpdates() {
             const interval = document.getElementById('resolverUpdateInterval').value;
             if (!interval) {
-                alert('Inserisci un intervallo valido (es. 12:00)');
+                alert('Enter a valid interval (e.g. 12:00)');
                 return;
             }
             
             try {
-                showLoader('Configurazione aggiornamento automatico in corso...');
+                showLoader('Configuring automatic updates...');
                 
                 // Crea un campo nascosto nel form se non esiste già
                 let hiddenField = document.querySelector('input[name="resolver_update_interval"]');
@@ -709,13 +709,13 @@ const getViewScripts = (protocol, host) => {
                 if (data.success) {
                     alert(data.message);
                 } else {
-                    alert('Errore: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
                 
                 checkResolverStatus();
             } catch (error) {
                 hideLoader();
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
         
@@ -740,7 +740,7 @@ const getViewScripts = (protocol, host) => {
         }
 
         //funzioni per visualizzare la rotella di caricamento
-        function showLoader(message = "Operazione in corso...") {
+        function showLoader(message = "Operation in progress...") {
             document.getElementById('loaderMessage').textContent = message;
             document.getElementById('loaderOverlay').style.display = 'flex';
         }
@@ -751,7 +751,7 @@ const getViewScripts = (protocol, host) => {
 
         async function stopResolverUpdates() {
             try {
-                showLoader('Arresto aggiornamenti automatici in corso...');
+                showLoader('Stopping automatic updates...');
                 
                 const response = await fetch('/api/resolver', {
                     method: 'POST',
@@ -778,13 +778,13 @@ const getViewScripts = (protocol, host) => {
                         hiddenField.value = '';
                     }
                 } else {
-                    alert('Errore: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
                 
                 checkResolverStatus();
             } catch (error) {
                 hideLoader();
-                alert('Errore nella richiesta: ' + error.message);
+                alert('Request error: ' + error.message);
             }
         }
         

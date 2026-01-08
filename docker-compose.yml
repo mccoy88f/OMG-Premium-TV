@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  omg-premium-tv:
+    image: node:20-slim
+    container_name: omg-premium-tv
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      PORT: "10000"
+      HOST: "0.0.0.0"
+    volumes:
+      - /mnt/user/appdata/tv:/app
+      - /mnt/user/appdata/tv/data:/app/data
+      - /mnt/user/appdata/tv/temp:/app/temp
+    ports:
+      - "10000:10000"
+    command: >
+      sh -c "
+        apt-get update &&
+        apt-get install -y python3 python3-pip &&
+        pip3 install requests --break-system-packages &&
+        npm install &&
+        mkdir -p /app/data /app/temp &&
+        chmod 777 /app/temp &&
+        node index.js
+      "
