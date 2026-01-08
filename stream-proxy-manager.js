@@ -2,10 +2,6 @@ const axios = require('axios');
 const { URL } = require('url');
 const config = require('./config');
 
-function getLanguageFromConfig(userConfig) {
-    return userConfig.language || config.defaultLanguage || 'Italiano';
-}
-
 class StreamProxyManager {
     constructor() {
         this.proxyCache = new Map();  // Usato per memorizzare lo stato di salute dei proxy
@@ -181,13 +177,11 @@ class StreamProxyManager {
         
         if (shouldExclude) {
             console.log(`⚠️ Dominio escluso dal proxy: ${input.url}`);
-            const language = getLanguageFromConfig(userConfig);
             return [{
                 name: input.name,
-                title: `${input.originalName} [${language.substring(0, 3).toUpperCase()}]`,
+                title: `${input.originalName}`,
                 url: input.url,
                 headers: input.headers,
-                language: language,
                 behaviorHints: {
                     notWebReady: false,
                     bingeGroup: "tv"
@@ -243,14 +237,12 @@ class StreamProxyManager {
                 streamType = 'PHP';
             }
     
-            const language = getLanguageFromConfig(userConfig);
             if (isHealthy) {
                 // Aggiunge lo stream proxato all'array
                 streams.push({
                     name: input.name,
-                    title: `🌐 ${input.originalName} [${language.substring(0, 3).toUpperCase()}]\n[Proxy ${streamType}]`,
+                    title: `🌐 ${input.originalName}\n[Proxy ${streamType}]`,
                     url: proxyUrl,
-                    language: language,
                     behaviorHints: {
                         notWebReady: false,
                         bingeGroup: "tv"
@@ -263,10 +255,9 @@ class StreamProxyManager {
                 if (userConfig.force_proxy === 'true') {
                     streams.push({
                         name: input.name,
-                        title: `${input.originalName} [${language.substring(0, 3).toUpperCase()}]`,
+                        title: `${input.originalName}`,
                         url: input.url,
                         headers: input.headers,
-                        language: language,
                         behaviorHints: {
                             notWebReady: false,
                             bingeGroup: "tv"
@@ -280,13 +271,11 @@ class StreamProxyManager {
             
             // In caso di errore, aggiungi lo stream originale SOLO se force_proxy è attivo
             if (userConfig.force_proxy === 'true') {
-                const language = getLanguageFromConfig(userConfig);
                 streams.push({
                     name: input.name,
-                    title: `${input.originalName} [${language.substring(0, 3).toUpperCase()}]`,
+                    title: `${input.originalName}`,
                     url: input.url,
                     headers: input.headers,
-                    language: language,
                     behaviorHints: {
                         notWebReady: false,
                         bingeGroup: "tv"

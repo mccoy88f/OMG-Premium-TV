@@ -22,7 +22,7 @@ function enrichWithDetailedEPG(meta, channelId, userConfig) {
     if (currentProgram) {
         let description = [];
 
-        description.push('📺 IN ONDA ORA:', currentProgram.title);
+        description.push('📺 ON AIR NOW:', currentProgram.title);
 
         if (currentProgram.description) {
             description.push('', currentProgram.description);
@@ -35,7 +35,7 @@ function enrichWithDetailedEPG(meta, channelId, userConfig) {
         }
 
         if (upcomingPrograms?.length > 0) {
-            description.push('', '📅 PROSSIMI PROGRAMMI:');
+            description.push('', '📅 UPCOMING PROGRAMS:');
             upcomingPrograms.forEach(program => {
                 description.push(
                     '',
@@ -118,13 +118,13 @@ async function metaHandler({ type, id, config: userConfig }) {
         let baseDescription = [];
 
         if (channel.streamInfo?.tvg?.chno) {
-            baseDescription.push(`📺 Canale ${channel.streamInfo.tvg.chno}`);
+            baseDescription.push(`📺 Channel ${channel.streamInfo.tvg.chno}`);
         }
 
         if (channel.description) {
             baseDescription.push('', channel.description);
         } else {
-            baseDescription.push('', `ID Canale: ${channel.streamInfo?.tvg?.id}`);
+            baseDescription.push('', `Channel ID: ${channel.streamInfo?.tvg?.id}`);
         }
 
         meta.description = baseDescription.join('\n');

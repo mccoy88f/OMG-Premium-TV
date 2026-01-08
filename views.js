@@ -267,23 +267,6 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                            Enable EPG
                        </label>
 
-                       <label>Channel Language:</label>
-                       <select name="language" style="width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #666; background: #333; color: white;">
-                           <option value="Italiano" ${(query.language || 'English') === 'Italiano' ? 'selected' : ''}>Italian</option>
-                           <option value="English" ${query.language === 'English' ? 'selected' : ''}>English</option>
-                           <option value="Español" ${query.language === 'Español' ? 'selected' : ''}>Spanish</option>
-                           <option value="Français" ${query.language === 'Français' ? 'selected' : ''}>French</option>
-                           <option value="Deutsch" ${query.language === 'Deutsch' ? 'selected' : ''}>German</option>
-                           <option value="Português" ${query.language === 'Português' ? 'selected' : ''}>Portuguese</option>
-                           <option value="Nederlands" ${query.language === 'Nederlands' ? 'selected' : ''}>Dutch</option>
-                           <option value="Polski" ${query.language === 'Polski' ? 'selected' : ''}>Polish</option>
-                           <option value="Русский" ${query.language === 'Русский' ? 'selected' : ''}>Russian</option>
-                           <option value="العربية" ${query.language === 'العربية' ? 'selected' : ''}>Arabic</option>
-                           <option value="中文" ${query.language === '中文' ? 'selected' : ''}>Chinese</option>
-                           <option value="日本語" ${query.language === '日本語' ? 'selected' : ''}>Japanese</option>
-                           <option value="한국어" ${query.language === '한국어' ? 'selected' : ''}>Korean</option>
-                       </select>
-
                        <div class="advanced-settings">
                            <div class="advanced-settings-header" onclick="toggleAdvancedSettings()">
                                <strong>Advanced Settings</strong>

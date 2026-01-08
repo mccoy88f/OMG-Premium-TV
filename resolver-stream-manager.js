@@ -1,10 +1,6 @@
 const config = require('./config');
 const PythonResolver = require('./python-resolver');
 
-function getLanguageFromConfig(userConfig) {
-    return userConfig.language || config.defaultLanguage || 'Italiano';
-}
-
 class ResolverStreamManager {
     constructor() {
         this.resolverCache = new Map();
@@ -174,17 +170,15 @@ class ResolverStreamManager {
                         return null;
                     }
                     
-                    const language = getLanguageFromConfig(userConfig);
                     // Se l'URL è lo stesso (non è stato processato dal resolver perché non è Vavoo),
                     // restituisci comunque uno stream con l'URL originale
                     if (result.resolved_url === streamDetails.url) {
                         console.log(`ℹ️ URL non modificato dal resolver per: ${streamDetails.name}, lo manteniamo`);
                         return {
                             name: `${input.originalName}`,
-                            title: `📺 ${streamDetails.name} [${language.substring(0, 3).toUpperCase()}]`,
+                            title: `📺 ${streamDetails.name}`,
                             url: streamDetails.url,
                             headers: streamDetails.headers,
-                            language: language,
                             behaviorHints: {
                                 notWebReady: false,
                                 bingeGroup: "tv"
@@ -195,10 +189,9 @@ class ResolverStreamManager {
 
                     return {
                         name: `${input.originalName}`,
-                        title: `🧩 ${streamDetails.name} [${language.substring(0, 3).toUpperCase()}]\n[Resolved]`,
+                        title: `🧩 ${streamDetails.name}\n[Resolved]`,
                         url: result.resolved_url,
                         headers: result.headers || streamDetails.headers,
-                        language: language,
                         behaviorHints: {
                             notWebReady: false,
                             bingeGroup: "tv"

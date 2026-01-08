@@ -89,7 +89,7 @@ class PlaylistTransformer {
       if (extinf.includes('tvg-name')) {
           const channelName = extinf.match(/tvg-name="([^"]+)"/) 
               ? extinf.match(/tvg-name="([^"]+)"/)[1]
-              : 'Canale sconosciuto';
+              : 'Unknown Channel';
       }
       
       const extinfHeaders = {};
@@ -171,7 +171,7 @@ class PlaylistTransformer {
   
       // Se genres è vuoto, usa 'Other Channels'
       if (genres.length === 0) {
-          genres = ['Altri Canali'];
+          genres = ['Other Channels'];
       }
 
       const nameParts = metadata.split(',');
@@ -218,7 +218,7 @@ class PlaylistTransformer {
           poster: channel.tvg?.logo,
           background: channel.tvg?.logo,
           logo: channel.tvg?.logo,
-          description: `Canale: ${cleanName} - ID: ${finalChannelId}`,
+          description: `Channel: ${cleanName} - ID: ${finalChannelId}`,
           runtime: 'LIVE',
           behaviorHints: {
               defaultVideoId: `tv|${finalChannelId}`,
@@ -247,7 +247,7 @@ class PlaylistTransformer {
       if (url === null || url.toLowerCase() === 'null') {
           channel.streamInfo.urls.push({
               url: 'https://static.vecteezy.com/system/resources/previews/001/803/236/mp4/no-signal-bad-tv-free-video.mp4',
-              name: 'Nessuno flusso presente nelle playlist m3u',
+              name: 'No stream present in m3u playlist',
               headers
           });
       } else {
@@ -321,7 +321,7 @@ class PlaylistTransformer {
       const channelsWithOnlyDummy = [];
       for (const [id, channel] of this.channelsMap.entries()) {
           if (channel.streamInfo.urls.length === 1 && 
-              channel.streamInfo.urls[0].name === 'Nessuno flusso presente nelle playlist m3u') {
+              channel.streamInfo.urls[0].name === 'No stream present in m3u playlist') {
               channelsWithOnlyDummy.push(channel.name);
           }
       }
@@ -409,7 +409,7 @@ class PlaylistTransformer {
           finalResult.channels.forEach(channel => {
               if (channel.streamInfo.urls.length > 1) {
                   channel.streamInfo.urls = channel.streamInfo.urls.filter(
-                      stream => stream.name !== 'Nessuno flusso presente nelle playlist m3u'
+                      stream => stream.name !== 'No stream present in m3u playlist'
                   );
               }
           });

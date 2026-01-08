@@ -103,17 +103,14 @@ async function catalogHandler({ type, id, extra, config: userConfig }) {
             const displayName = cleanNameForImage(channel.name);
             const encodedName = encodeURIComponent(displayName).replace(/%20/g, '+');
             const fallbackLogo = `https://dummyimage.com/500x500/590b8a/ffffff.jpg&text=${encodedName}`;
-            const language = getLanguageFromConfig(userConfig);
-            const languageAbbr = language.substring(0, 3).toUpperCase();
-
             const meta = {
                 id: channel.id,
                 type: 'tv',
-                name: `${channel.name} [${languageAbbr}]`,
+                name: `${channel.name}`,
                 poster: channel.poster || fallbackLogo,
                 background: channel.background || fallbackLogo,
                 logo: channel.logo || fallbackLogo,
-                description: channel.description || `Canale: ${channel.name} - ID: ${channel.streamInfo?.tvg?.id}`,
+                description: channel.description || `Channel: ${channel.name} - ID: ${channel.streamInfo?.tvg?.id}`,
                 genre: channel.genre,
                 posterShape: channel.posterShape || 'square',
                 releaseInfo: 'LIVE',
@@ -125,7 +122,7 @@ async function catalogHandler({ type, id, extra, config: userConfig }) {
             };
 
             if (channel.streamInfo?.tvg?.chno) {
-                meta.name = `${channel.streamInfo.tvg.chno}. ${channel.name} [${languageAbbr}]`;
+                meta.name = `${channel.streamInfo.tvg.chno}. ${channel.name}`;
             }
 
             if ((!meta.poster || !meta.background || !meta.logo) && channel.streamInfo?.tvg?.id) {
@@ -153,7 +150,7 @@ async function catalogHandler({ type, id, extra, config: userConfig }) {
 
 function enrichWithEPG(meta, channelId, userConfig) {
     if (!userConfig.epg_enabled || !channelId) {
-        meta.description = `Canale live: ${meta.name}`;
+        meta.description = `Live Channel: ${meta.name}`;
         meta.releaseInfo = 'LIVE';
         return meta;
     }
@@ -162,26 +159,26 @@ function enrichWithEPG(meta, channelId, userConfig) {
     const upcomingPrograms = EPGManager.getUpcomingPrograms(normalizeId(channelId));
 
     if (currentProgram) {
-        meta.description = `IN ONDA ORA:\n${currentProgram.title}`;
+        meta.description = `ON AIR NOW:\n${currentProgram.title}`;
 
         if (currentProgram.description) {
             meta.description += `\n${currentProgram.description}`;
         }
 
-        meta.description += `\nOrario: ${currentProgram.start} - ${currentProgram.stop}`;
+        meta.description += `\nTime: ${currentProgram.start} - ${currentProgram.stop}`;
 
         if (currentProgram.category) {
-            meta.description += `\nCategoria: ${currentProgram.category}`;
+            meta.description += `\nCategory: ${currentProgram.category}`;
         }
 
         if (upcomingPrograms && upcomingPrograms.length > 0) {
-            meta.description += '\n\nPROSSIMI PROGRAMMI:';
+            meta.description += '\n\nUPCOMING PROGRAMS:';
             upcomingPrograms.forEach(program => {
                 meta.description += `\n${program.start} - ${program.title}`;
             });
         }
 
-        meta.releaseInfo = `In onda: ${currentProgram.title}`;
+        meta.releaseInfo = `On air: ${currentProgram.title}`;
     }
 
     return meta;
@@ -217,8 +214,8 @@ async function streamHandler({ id, config: userConfig }) {
 
                 return {
                     streams: [{
-                        name: 'Completato',
-                        title: '✅ Playlist rigenerata con successo!\n Riavvia stremio o torna indietro.',
+                        name: 'Completed',
+                        title: '✅ Playlist regenerated successfully!\n Restart Stremio or go back.',
                         url: 'https://static.vecteezy.com/system/resources/previews/001/803/236/mp4/no-signal-bad-tv-free-video.mp4',
                         behaviorHints: {
                             notWebReady: false,
@@ -230,8 +227,8 @@ async function streamHandler({ id, config: userConfig }) {
                 console.log('❌ Errore nell\'esecuzione dello script Python');
                 return {
                     streams: [{
-                        name: 'Errore',
-                        title: `❌ Errore: ${PythonRunner.lastError || 'Errore sconosciuto'}`,
+                        name: 'Error',
+                        title: `❌ Error: ${PythonRunner.lastError || 'Unknown Error'}`,
                         url: 'https://static.vecteezy.com/system/resources/previews/001/803/236/mp4/no-signal-bad-tv-free-video.mp4',
                         behaviorHints: {
                             notWebReady: false,
@@ -361,7 +358,7 @@ async function streamHandler({ id, config: userConfig }) {
             poster: channel.poster || fallbackLogo,
             background: channel.background || fallbackLogo,
             logo: channel.logo || fallbackLogo,
-            description: channel.description || `ID Canale: ${channel.streamInfo?.tvg?.id}`,
+            description: channel.description || `Channel ID: ${channel.streamInfo?.tvg?.id}`,
             genre: channel.genre,
             posterShape: channel.posterShape || 'square',
             releaseInfo: 'LIVE',
@@ -406,13 +403,11 @@ async function processOriginalStreams(originalStreamDetails, channel, userConfig
     } else {
         // Aggiungi prima gli stream originali
         for (const streamDetails of originalStreamDetails) {
-            const language = getLanguageFromConfig(userConfig);
             const streamMeta = {
                 name: streamDetails.name,
-                title: `📺 ${streamDetails.originalName || streamDetails.name} [${language.substring(0, 3).toUpperCase()}]`,
+                title: `📺 ${streamDetails.originalName || streamDetails.name}`,
                 url: streamDetails.url,
                 headers: streamDetails.headers,
-                language: language,
                 behaviorHints: {
                     notWebReady: false,
                     bingeGroup: "tv"
