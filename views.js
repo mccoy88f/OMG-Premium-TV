@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { getViewScripts } = require('./views-scripts');
 
-function renderGatePage(manifest) {
+function renderGatePage(manifest, returnPath) {
+    const returnUrl = (returnPath && returnPath.startsWith('/')) ? returnPath : '';
     return `
 <!DOCTYPE html>
 <html>
@@ -23,6 +24,7 @@ function renderGatePage(manifest) {
         <h1>Accesso alla configurazione</h1>
         <p style="color: #aaa; margin-bottom: 20px;">Inserisci la password per accedere alla home dell'addon.</p>
         <form id="gateForm" method="post" action="/api/home-auth/unlock">
+            <input type="hidden" name="returnUrl" value="${returnUrl}">
             <input type="password" name="password" id="gatePassword" placeholder="Password" required autofocus>
             <button type="submit">Accedi</button>
         </form>
@@ -319,10 +321,6 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                            Abilita EPG
                        </label>
 
-                       <label>ID Sessione (opzionale):</label>
-                       <input type="text" name="session_id" value="${query.session_id || ''}" placeholder="Es. famiglia, ufficio - per accessi simultanei con config diverse">
-                       <small style="color: #999;">Se impostato, la cache sarà isolata per questa sessione.</small>
-                       
                        <label>Lingua Canali:</label>
                        <select name="language" style="width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #666; background: #333; color: white;">
                            <option value="Italiano" ${(query.language || 'Italiano') === 'Italiano' ? 'selected' : ''}>Italiano</option>

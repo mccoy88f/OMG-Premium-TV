@@ -15,16 +15,27 @@ const ResolverStreamManager = require('./resolver-stream-manager')();
 const PythonResolver = require('./python-resolver');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Registry cache per sessione (session_id opzionale nell'URL per accessi simultanei)
+// Chiave cache derivata dalla config (stessa config = stessa cache; nessun session_id scelto dall'utente)
+function getSessionKeyFromConfig(userConfig) {
+    if (!userConfig || typeof userConfig !== 'object') return '_default';
+    const keys = ['m3u', 'epg', 'proxy', 'id_suffix', 'remapper_path', 'update_interval', 'resolver_script', 'python_script_url'];
+    const o = {};
+    keys.forEach(k => { if (userConfig[k] !== undefined && userConfig[k] !== '') o[k] = String(userConfig[k]); });
+    const str = JSON.stringify(o);
+    return crypto.createHash('sha256').update(str).digest('hex').slice(0, 16);
+}
+
+// Registry cache per sessione (chiave derivata dalla config)
 const cacheRegistry = new Map();
 async function getCacheManager(sessionId, userConfig) {
-    const key = (sessionId && String(sessionId).trim()) ? String(sessionId).trim() : '_default';
+    const key = (sessionId && String(sessionId).trim()) ? String(sessionId).trim() : getSessionKeyFromConfig(userConfig);
     if (!cacheRegistry.has(key)) {
         cacheRegistry.set(key, await CacheManagerFactory(userConfig || {}, key === '_default' ? null : key));
     }
@@ -45,7 +56,9 @@ app.post('/api/home-auth/set', (req, res) => {
 app.post('/api/home-auth/unlock', (req, res) => {
     const password = (req.body && req.body.password) || '';
     if (!homeAuth.verifyPassword(password)) {
-        return res.redirect('/?error=1');
+        const returnUrl = (req.body && req.body.returnUrl) || '';
+        const safeReturn = returnUrl && returnUrl.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '';
+        return res.redirect(safeReturn ? `${safeReturn}${safeReturn.includes('?') ? '&' : '?'}error=1` : '/?error=1');
     }
     const value = homeAuth.getUnlockCookieValue();
     if (value) {
@@ -56,14 +69,16 @@ app.post('/api/home-auth/unlock', (req, res) => {
             sameSite: 'lax'
         });
     }
-    res.redirect('/');
+    const returnUrl = (req.body && req.body.returnUrl) || '';
+    const safeReturn = returnUrl && returnUrl.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/';
+    res.redirect(safeReturn);
 });
 
 // Route principale - supporta sia il vecchio che il nuovo sistema
 app.get('/', async (req, res) => {
     const state = homeAuth.getState();
     if (state.enabled && !homeAuth.verifyUnlockCookie(req.cookies[homeAuth.COOKIE_NAME])) {
-        return res.send(renderGatePage(config.manifest));
+        return res.send(renderGatePage(config.manifest, req.path));
     }
     const protocol = req.headers['x-forwarded-proto'] || req.protocol;
     const host = req.headers['x-forwarded-host'] || req.get('host');
@@ -75,7 +90,7 @@ app.get('/', async (req, res) => {
 app.get('/:config/configure', async (req, res) => {
     const state = homeAuth.getState();
     if (state.enabled && !homeAuth.verifyUnlockCookie(req.cookies[homeAuth.COOKIE_NAME])) {
-        return res.send(renderGatePage(config.manifest));
+        return res.send(renderGatePage(config.manifest, req.path));
     }
     try {
         const protocol = req.headers['x-forwarded-proto'] || req.protocol;
