@@ -21,7 +21,17 @@ A coffee ☕ or a beer 🍺 is a much appreciated gesture of recognition and hel
 
 ## 🔄 OMG Premium TV Changelog
 
-### 🚀 Version 6.0.0 (Current)
+### 🚀 Version 7.0.0 (Current)
+
+### ✨ New Features
+- **🔒 Home password protection**: Option in the web UI to protect access to the configuration page with a password. When enabled, anyone opening the home (or the "Configure" link from Stremio) must enter the password; using the addon from Stremio does not require a password.
+- **🔄 Sessions and isolated cache**: Cache is automatically isolated per configuration (same config = same cache). Multiple users or different configurations can use the server at the same time without overwriting each other's cache.
+
+### 🔧 Improvements
+- **🔒 Home protection UI**: When protection is active you see the checkbox and a "Modifica password" (Change password) button; password and confirm fields only appear when you click it.
+- **🔗 Return after login**: After entering the password on the gate you are redirected back to the page you came from (e.g. configuration page with encoded URL).
+
+### 🚀 Version 6.0.0
 
 ### 📢 Name Rebrand
 - **📜 OMG+ becomes OMG Premium**: New name to differentiate and highlight all the new available functions. OMG TV remains as the basic version with preset channels. It will no longer be updated.
@@ -113,6 +123,11 @@ Click on a channel to see:
 
 ## 🛠️ Advanced Settings
 
+### 🔒 Protect home access
+- **Enable password protection** ✅: When enabled, the next visit to the configuration page (home or "Configure" link from Stremio) will require the password. The addon in Stremio keeps working without a password.
+- **Change password**: When protection is active you see "Protezione attiva" (Protection active) and the **Modifica password** (Change password) button; clicking it shows the fields to change the password. To disable protection, uncheck the box and save (no password needed).
+- The password is set and changed only from the web UI; it is not required to watch channels from Stremio.
+
 ### 🌐 Proxy Configuration
 - **Proxy URL** 🔗: URL of the proxy for streams (only compatible with [MediaFlow Proxy](https://github.com/mhdzumair/mediaflow-proxy))
 - **Proxy Password** 🔑: Password for proxy authentication
@@ -195,6 +210,8 @@ Click on a channel to see:
 - ✅ Custom playlist generation
 - ✅ Automatic updates
 - ✅ Configuration backup and restore
+- ✅ Optional password protection for the configuration page
+- ✅ Cache isolated per configuration (concurrent access)
 - TECH SPEC on [wiki](https://github.com/mccoy88f/OMG-Premium-TV/wiki/Tech-Spec-%E2%80%90-Specifiche-Teniche))
 
 

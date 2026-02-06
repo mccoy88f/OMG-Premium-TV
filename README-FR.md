@@ -24,7 +24,17 @@ Un café ☕ ou une bière 🍺 sont un geste de reconnaissance très apprécié
 
 ## 🔄 Changelog de OMG Premium TV
 
-### 🚀 Version 6.0.0 (Actuelle)
+### 🚀 Version 7.0.0 (Actuelle)
+
+### ✨ Nouvelles fonctionnalités
+- **🔒 Protection par mot de passe de la home** : Option dans l’interface web pour protéger l’accès à la page de configuration par un mot de passe. Si activée, toute personne ouvrant la home (ou le lien « Configurer » depuis Stremio) doit saisir le mot de passe ; l’utilisation de l’addon depuis Stremio ne demande pas de mot de passe.
+- **🔄 Sessions et cache isolé** : Le cache est isolé automatiquement par configuration (même config = même cache). Plusieurs utilisateurs ou configurations différentes peuvent utiliser le serveur en même temps sans s’écraser mutuellement.
+
+### 🔧 Améliorations
+- **🔒 Interface protection home** : Quand la protection est active, la case et le bouton « Modifica password » (Modifier le mot de passe) sont visibles ; les champs mot de passe et confirmation n’apparaissent qu’en cliquant dessus.
+- **🔗 Retour après connexion** : Après avoir saisi le mot de passe sur la page d’accès, vous êtes renvoyé à la page d’origine (ex. page de configuration avec URL encodée).
+
+### 🚀 Version 6.0.0
 
 ### 📢 Changement de nom
 - **📜 OMG+ devient OMG Premium** : Nouveau nom pour différencier et valoriser toutes les nouvelles fonctions disponibles. OMG TV reste comme version de base avec des chaînes prédéfinies. Elle ne sera plus mise à jour.
@@ -116,6 +126,11 @@ Cliquez sur une chaîne pour voir :
 
 ## 🛠️ Paramètres avancés
 
+### 🔒 Protéger l'accès à la home
+- **Activer la protection par mot de passe** ✅ : Si activée, la prochaine visite sur la page de configuration (home ou lien « Configurer » depuis Stremio) demandera le mot de passe. L’addon dans Stremio continue de fonctionner sans mot de passe.
+- **Modifier le mot de passe** : Quand la protection est active, vous voyez « Protezione attiva » et le bouton **Modifica password** ; en cliquant, les champs pour changer le mot de passe s’affichent. Pour désactiver, décochez et enregistrez (sans saisir de mot de passe).
+- Le mot de passe se définit et se modifie uniquement depuis l’interface web ; il n’est pas demandé pour regarder les chaînes dans Stremio.
+
 ### 🌐 Configuration du proxy
 - **URL Proxy** 🔗 : URL du proxy pour les streams (compatible uniquement avec [MediaFlow Proxy](https://github.com/mhdzumair/mediaflow-proxy))
 - **Mot de passe Proxy** 🔑 : Mot de passe pour l'authentification du proxy
@@ -198,6 +213,8 @@ Cliquez sur une chaîne pour voir :
 - ✅ Génération de playlists personnalisées
 - ✅ Mises à jour automatiques
 - ✅ Sauvegarde et restauration de la configuration
+- ✅ Protection par mot de passe de la page de configuration (optionnelle)
+- ✅ Cache isolée par configuration (accès simultanés)
 - Spécifications techniques dans le [wiki](https://github.com/mccoy88f/OMG-Premium-TV/wiki/Tech-Spec-%E2%80%90-Specifiche-Teniche)
 
 ## 📱 Compatibilité
