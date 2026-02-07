@@ -31,6 +31,7 @@ A coffee ☕ or a beer 🍺 is a much appreciated gesture of recognition and hel
 
 ### 🔧 Improvements
 - **🌐 UI in 4 languages**: The web interface is available in Italian, English, Spanish, and French; you can switch language from the bar at the top right.
+- **📋 Preset lists (optional)**: On the configuration page, a section lets you add with one click the predefined iptv-org and iptv-epg.org playlist and EPG URLs by country (M3U and EPG fields).
 - **⚙️ Settings section**: The catalog has a **⚙️** genre filter that groups utility channels: **Refresh M3U playlist**, **Refresh EPG**, and **Regenerate Python playlist**. Descriptions and messages are in English.
 - **🔄 Pseudo-channels**: Opening a channel from the ⚙️ section runs the action (reload playlist, EPG update, or Python regeneration) and shows an outcome message; no real video stream.
 - **♻️ Cache on restart**: If the cache is empty (e.g. after a Docker restart), the playlist and EPG are rebuilt automatically on the first request when M3U/EPG URLs are configured.

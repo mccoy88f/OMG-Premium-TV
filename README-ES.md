@@ -34,6 +34,7 @@ Trabajar en este addon y mantenerlo actualizado ha costado muchísimas horas y m
 
 ### 🔧 Mejoras
 - **🌐 Interfaz en 4 idiomas**: La interfaz web está disponible en italiano, inglés, español y francés; puedes cambiar el idioma desde la barra superior derecha.
+- **📋 Listas predefinidas (opcional)**: En la página de configuración, una sección permite añadir con un clic las playlist y EPG predefinidos de iptv-org e iptv-epg.org por país (campos M3U y EPG).
 - **⚙️ Sección Ajustes**: En el catálogo hay un filtro por género **⚙️** que agrupa los canales de utilidad: **Refresh M3U playlist**, **Refresh EPG** y **Rigenera Playlist Python**. Descripciones y mensajes en inglés.
 - **🔄 Pseudo-canales**: Al abrir un canal de la sección ⚙️ se ejecuta la acción (recargar playlist, actualizar EPG o regenerar Python) y se muestra un mensaje de resultado; no hay flujo de vídeo real.
 - **♻️ Caché al reiniciar**: Si la caché está vacía (p. ej. tras reiniciar Docker), la playlist y el EPG se reconstruyen automáticamente en la primera petición cuando hay URL M3U/EPG configurados.

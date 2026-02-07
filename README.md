@@ -34,6 +34,7 @@ Un caffè ☕ o una birra sono 🍺 un gesto di riconoscenza molto apprezzato e 
 
 ### 🔧 Miglioramenti
 - **🌐 UI in 4 lingue**: L'interfaccia web è disponibile in italiano, inglese, spagnolo e francese; si può cambiare lingua dalla barra in alto a destra.
+- **📋 Liste predefinite (opzionale)**: In pagina di configurazione, una sezione permette di aggiungere in un clic le playlist e gli EPG predefiniti di iptv-org e iptv-epg.org per nazione (campi M3U e EPG).
 - **⚙️ Sezione Impostazioni**: Nel catalogo è presente un filtro per genere **⚙️** (impostazioni) che raggruppa i canali utility: **Refresh M3U playlist**, **Refresh EPG** e **Rigenera Playlist Python**. Descrizioni e messaggi in inglese.
 - **🔄 Pseudo-canali**: Aprendo un canale dalla sezione ⚙️ si esegue l’azione (ricarica playlist, aggiornamento EPG o rigenerazione Python) e si mostra un messaggio di esito; nessun flusso video reale.
 - **♻️ Cache al riavvio**: Se la cache è vuota (es. dopo riavvio Docker), la playlist e l’EPG vengono ricostruite automaticamente alla prima richiesta con URL M3U/EPG configurati.
