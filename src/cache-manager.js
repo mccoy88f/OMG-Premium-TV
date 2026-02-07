@@ -22,7 +22,7 @@ class CacheManager extends EventEmitter {
         this.pollingInterval = null;
         this.lastFilter = null;
         this.db = null;
-        this.dbPath = path.join(__dirname, 'data', safeSessionDbName(sessionId));
+        this.dbPath = path.join(__dirname, '..', 'data', safeSessionDbName(sessionId));
     }
 
     _sk() {
@@ -32,7 +32,7 @@ class CacheManager extends EventEmitter {
     async initializeDatabase() {
         try {
             // Crea directory data se non esiste
-            const dataDir = path.join(__dirname, 'data');
+            const dataDir = path.join(__dirname, '..', 'data');
             if (!fs.existsSync(dataDir)) {
                 fs.mkdirSync(dataDir, { recursive: true });
             }

@@ -30,6 +30,7 @@ A coffee ☕ or a beer 🍺 is a much appreciated gesture of recognition and hel
 - **⏰ Session expiry (24h)**: If a session receives no requests for **24 hours**, it expires automatically: all cache for that session (M3U cache, EPG, resolver, generator) is removed. On the next request with the same config, the session is recreated and data is repopulated from the URLs.
 
 ### 🔧 Improvements
+- **🌐 UI in 4 languages**: The web interface is available in Italian, English, Spanish, and French; you can switch language from the bar at the top right.
 - **⚙️ Settings section**: The catalog has a **⚙️** genre filter that groups utility channels: **Refresh M3U playlist**, **Refresh EPG**, and **Regenerate Python playlist**. Descriptions and messages are in English.
 - **🔄 Pseudo-channels**: Opening a channel from the ⚙️ section runs the action (reload playlist, EPG update, or Python regeneration) and shows an outcome message; no real video stream.
 - **♻️ Cache on restart**: If the cache is empty (e.g. after a Docker restart), the playlist and EPG are rebuilt automatically on the first request when M3U/EPG URLs are configured.

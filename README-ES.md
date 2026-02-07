@@ -33,6 +33,7 @@ Trabajar en este addon y mantenerlo actualizado ha costado muchísimas horas y m
 - **⏰ Caducidad de sesiones (24h)**: Si una sesión no recibe peticiones durante **24 horas**, caduca automáticamente: se elimina toda la caché de esa sesión (caché M3U, EPG, resolver, generador). En la siguiente petición con la misma config la sesión se recrea y los datos se rellenan desde las URL.
 
 ### 🔧 Mejoras
+- **🌐 Interfaz en 4 idiomas**: La interfaz web está disponible en italiano, inglés, español y francés; puedes cambiar el idioma desde la barra superior derecha.
 - **⚙️ Sección Ajustes**: En el catálogo hay un filtro por género **⚙️** que agrupa los canales de utilidad: **Refresh M3U playlist**, **Refresh EPG** y **Rigenera Playlist Python**. Descripciones y mensajes en inglés.
 - **🔄 Pseudo-canales**: Al abrir un canal de la sección ⚙️ se ejecuta la acción (recargar playlist, actualizar EPG o regenerar Python) y se muestra un mensaje de resultado; no hay flujo de vídeo real.
 - **♻️ Caché al reiniciar**: Si la caché está vacía (p. ej. tras reiniciar Docker), la playlist y el EPG se reconstruyen automáticamente en la primera petición cuando hay URL M3U/EPG configurados.

@@ -46,7 +46,7 @@ class PlaylistTransformer {
 
   async loadRemappingRules(config) {
       logger.log(this._logKey, 'Remapper path:', config?.remapper_path);
-      const defaultPath = path.join(__dirname, 'link.epg.remapping');
+      const defaultPath = path.join(__dirname, '..', 'link.epg.remapping');
       const remappingPath = config?.remapper_path || defaultPath;
     
       try {

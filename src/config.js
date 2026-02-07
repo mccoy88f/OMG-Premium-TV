@@ -55,7 +55,7 @@ const baseConfig = {
 };
 
 function loadCustomConfig() {
-    const configOverridePath = path.join(__dirname, 'addon-config.json');
+    const configOverridePath = path.join(__dirname, '..', 'addon-config.json');
     
     try {
         const addonConfigExists = fs.existsSync(configOverridePath);

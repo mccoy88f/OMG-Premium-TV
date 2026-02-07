@@ -44,7 +44,7 @@ function renderGatePage(manifest, returnPath) {
 
 const renderConfigPage = (protocol, host, query, manifest, sessionKey = null, showSessionChangeWarning = false) => {
    // Verifica se il file addon-config.json esiste
-   const configPath = path.join(__dirname, 'addon-config.json');
+   const configPath = path.join(__dirname, '..', 'addon-config.json');
    const m3uDefaultUrl = 'https://github.com/mccoy88f/OMG-Premium-TV/blob/main/tv.png?raw=true';
    const m3uIsDisabled = !fs.existsSync(configPath);
    const sessionIdDisplay = sessionKey || '—';
@@ -271,7 +271,11 @@ const renderConfigPage = (protocol, host, query, manifest, sessionKey = null, sh
                <div id="langBar" style="position: absolute; top: 15px; right: 20px; font-size: 14px; color: #ccc;">
                    <a href="#" id="langEn" onclick="setLanguage('en'); return false;" style="color: inherit; text-decoration: none; margin-right: 6px;">🇬🇧 ENG</a>
                    <span style="color: #666;">|</span>
-                   <a href="#" id="langIt" onclick="setLanguage('it'); return false;" style="color: inherit; text-decoration: none; margin-left: 6px;">🇮🇹 ITA</a>
+                   <a href="#" id="langIt" onclick="setLanguage('it'); return false;" style="color: inherit; text-decoration: none; margin: 0 6px;">🇮🇹 ITA</a>
+                   <span style="color: #666;">|</span>
+                   <a href="#" id="langEs" onclick="setLanguage('es'); return false;" style="color: inherit; text-decoration: none; margin: 0 6px;">🇪🇸 ESP</a>
+                   <span style="color: #666;">|</span>
+                   <a href="#" id="langFr" onclick="setLanguage('fr'); return false;" style="color: inherit; text-decoration: none; margin-left: 6px;">🇫🇷 FRA</a>
                </div>
                <img class="logo" src="${manifest.logo}" alt="logo">
                <h1>${manifest.name} <span style="font-size: 16px; color: #aaa;">v${manifest.version}</span></h1>

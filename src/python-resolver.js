@@ -11,13 +11,13 @@ const logger = require('./logger');
 function safeResolverScriptName(sessionKey) {
     if (!sessionKey || sessionKey === '_default') return 'resolver_script.py';
     const hash = crypto.createHash('sha256').update(String(sessionKey)).digest('hex').slice(0, 16);
-    return path.join(__dirname, 'temp', `resolver_${hash}.py`);
+    return path.join(__dirname, '..', 'temp', `resolver_${hash}.py`);
 }
 
 class PythonResolver {
     constructor(sessionKey = null) {
         this.sessionKey = sessionKey;
-        this.scriptPath = sessionKey ? safeResolverScriptName(sessionKey) : path.join(__dirname, 'resolver_script.py');
+        this.scriptPath = sessionKey ? safeResolverScriptName(sessionKey) : path.join(__dirname, '..', 'resolver_script.py');
         this.resolvedLinksCache = new Map();
         this.cacheExpiryTime = 20 * 60 * 1000; // 20 minuti di cache per i link risolti
         this.lastExecution = null;
@@ -28,7 +28,7 @@ class PythonResolver {
         this.updateInterval = null;
         this.pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
 
-        const tempDir = path.join(__dirname, 'temp');
+        const tempDir = path.join(__dirname, '..', 'temp');
         if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir, { recursive: true });
     }
 
@@ -124,8 +124,8 @@ class PythonResolver {
                 proxy_config: proxyConfig // Aggiungi la configurazione del proxy
             };
             
-            const inputFile = path.join(__dirname, 'temp', `input_${Date.now()}.json`);
-            const outputFile = path.join(__dirname, 'temp', `output_${Date.now()}.json`);
+            const inputFile = path.join(__dirname, '..', 'temp', `input_${Date.now()}.json`);
+            const outputFile = path.join(__dirname, '..', 'temp', `output_${Date.now()}.json`);
             
             fs.writeFileSync(inputFile, JSON.stringify(inputParams, null, 2));
             

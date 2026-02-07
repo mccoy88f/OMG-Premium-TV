@@ -11,12 +11,12 @@ const logger = require('./logger');
 function safeRunnerNames(sessionKey) {
     if (!sessionKey || sessionKey === '_default') {
         return {
-            scriptPath: path.join(__dirname, 'temp_script.py'),
-            m3uOutputPath: path.join(__dirname, 'generated_playlist.m3u')
+            scriptPath: path.join(__dirname, '..', 'temp_script.py'),
+            m3uOutputPath: path.join(__dirname, '..', 'generated_playlist.m3u')
         };
     }
     const hash = crypto.createHash('sha256').update(String(sessionKey)).digest('hex').slice(0, 16);
-    const tempDir = path.join(__dirname, 'temp');
+    const tempDir = path.join(__dirname, '..', 'temp');
     return {
         scriptPath: path.join(tempDir, `script_${hash}.py`),
         m3uOutputPath: path.join(tempDir, `generated_${hash}.m3u`)
@@ -37,7 +37,7 @@ class PythonRunner {
         this.updateInterval = null;
         this._cacheManagerRef = null;
 
-        const tempDir = path.join(__dirname, 'temp');
+        const tempDir = path.join(__dirname, '..', 'temp');
         if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir, { recursive: true });
     }
 
@@ -230,14 +230,15 @@ class PythonRunner {
     cleanupM3UFiles() {
         try {
             // Trova tutti i file M3U e M3U8 nella directory
-            const dirFiles = fs.readdirSync(__dirname);
+            const projectRoot = path.join(__dirname, '..');
+            const dirFiles = fs.readdirSync(projectRoot);
             const m3uFiles = dirFiles.filter(file =>
                 file.endsWith('.m3u') || file.endsWith('.m3u8')
             );
 
             // Elimina ogni file M3U/M3U8 trovato
             m3uFiles.forEach(file => {
-                const fullPath = path.join(__dirname, file);
+                const fullPath = path.join(projectRoot, file);
                 try {
                     fs.unlinkSync(fullPath);
                     logger.log(this.sessionKey, 'Temp file removed:', fullPath);
@@ -257,10 +258,11 @@ class PythonRunner {
      */
     findAllM3UFiles() {
         try {
-            const dirFiles = fs.readdirSync(__dirname);
+            const projectRoot = path.join(__dirname, '..');
+            const dirFiles = fs.readdirSync(projectRoot);
             return dirFiles
                 .filter(file => file.endsWith('.m3u') || file.endsWith('.m3u8'))
-                .map(file => path.join(__dirname, file));
+                .map(file => path.join(projectRoot, file));
         } catch (error) {
             logger.error(this.sessionKey, 'M3U file search error:', error.message);
             return [];

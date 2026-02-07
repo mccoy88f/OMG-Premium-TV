@@ -21,7 +21,7 @@ class EPGManager {
         this.sessionKey = sessionKey;
         this.epgData = null;
         this.db = null;
-        this.dbPath = path.join(__dirname, 'data', safeEpgDbName(sessionKey));
+        this.dbPath = path.join(__dirname, '..', 'data', safeEpgDbName(sessionKey));
         this.lastUpdate = null;
         this.isUpdating = false;
         this.CHUNK_SIZE = 5000;
@@ -38,7 +38,7 @@ class EPGManager {
     async initializeDatabase() {
         try {
             // Crea directory data se non esiste
-            const dataDir = path.join(__dirname, 'data');
+            const dataDir = path.join(__dirname, '..', 'data');
             if (!fs.existsSync(dataDir)) {
                 fs.mkdirSync(dataDir, { recursive: true });
             }

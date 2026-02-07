@@ -31,8 +31,12 @@ const getViewScripts = (protocol, host) => {
             });
             var enBtn = document.getElementById('langEn');
             var itBtn = document.getElementById('langIt');
+            var esBtn = document.getElementById('langEs');
+            var frBtn = document.getElementById('langFr');
             if (enBtn) { enBtn.style.fontWeight = lang === 'en' ? 'bold' : 'normal'; enBtn.style.textDecoration = lang === 'en' ? 'underline' : 'none'; }
             if (itBtn) { itBtn.style.fontWeight = lang === 'it' ? 'bold' : 'normal'; itBtn.style.textDecoration = lang === 'it' ? 'underline' : 'none'; }
+            if (esBtn) { esBtn.style.fontWeight = lang === 'es' ? 'bold' : 'normal'; esBtn.style.textDecoration = lang === 'es' ? 'underline' : 'none'; }
+            if (frBtn) { frBtn.style.fontWeight = lang === 'fr' ? 'bold' : 'normal'; frBtn.style.textDecoration = lang === 'fr' ? 'underline' : 'none'; }
         };
         window.setLanguage = function(lang) {
             localStorage.setItem('omg_tv_lang', lang);

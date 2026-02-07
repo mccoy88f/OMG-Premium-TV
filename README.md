@@ -33,6 +33,7 @@ Un caffè ☕ o una birra sono 🍺 un gesto di riconoscenza molto apprezzato e 
 - **⏰ Scadenza sessioni (24h)**: Se una sessione non riceve richieste per **24 ore**, scade automaticamente: tutta la cache di quella sessione (cache M3U, EPG, resolver, generatore) viene eliminata. Alla successiva richiesta con la stessa config la sessione viene ricreata e i dati ripopolati dagli URL.
 
 ### 🔧 Miglioramenti
+- **🌐 UI in 4 lingue**: L'interfaccia web è disponibile in italiano, inglese, spagnolo e francese; si può cambiare lingua dalla barra in alto a destra.
 - **⚙️ Sezione Impostazioni**: Nel catalogo è presente un filtro per genere **⚙️** (impostazioni) che raggruppa i canali utility: **Refresh M3U playlist**, **Refresh EPG** e **Rigenera Playlist Python**. Descrizioni e messaggi in inglese.
 - **🔄 Pseudo-canali**: Aprendo un canale dalla sezione ⚙️ si esegue l’azione (ricarica playlist, aggiornamento EPG o rigenerazione Python) e si mostra un messaggio di esito; nessun flusso video reale.
 - **♻️ Cache al riavvio**: Se la cache è vuota (es. dopo riavvio Docker), la playlist e l’EPG vengono ricostruite automaticamente alla prima richiesta con URL M3U/EPG configurati.

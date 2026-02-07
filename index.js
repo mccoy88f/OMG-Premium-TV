@@ -2,29 +2,29 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { addonBuilder } = require('stremio-addon-sdk');
-const PlaylistTransformer = require('./playlist-transformer');
-const { catalogHandler, streamHandler } = require('./handlers');
-const metaHandler = require('./meta-handler');
-const EPGManagerModule = require('./epg-manager');
+const PlaylistTransformer = require('./src/playlist-transformer');
+const { catalogHandler, streamHandler } = require('./src/handlers');
+const metaHandler = require('./src/meta-handler');
+const EPGManagerModule = require('./src/epg-manager');
 const getEPGManager = EPGManagerModule.getEPGManager;
 const removeEPGSession = EPGManagerModule.removeEPGSession;
-const config = require('./config');
-const CacheManagerFactory = require('./cache-manager');
-const { renderConfigPage, renderGatePage } = require('./views');
-const homeAuth = require('./home-auth');
-const PythonRunnerModule = require('./python-runner');
+const config = require('./src/config');
+const CacheManagerFactory = require('./src/cache-manager');
+const { renderConfigPage, renderGatePage } = require('./views/views');
+const homeAuth = require('./src/home-auth');
+const PythonRunnerModule = require('./src/python-runner');
 const PythonRunner = PythonRunnerModule;
 const getPythonRunner = PythonRunnerModule.getPythonRunner;
 const removeRunnerSession = PythonRunnerModule.removeRunnerSession;
-const ResolverStreamManager = require('./resolver-stream-manager')();
-const PythonResolverModule = require('./python-resolver');
+const ResolverStreamManager = require('./src/resolver-stream-manager')();
+const PythonResolverModule = require('./src/python-resolver');
 const PythonResolver = PythonResolverModule;
 const getPythonResolver = PythonResolverModule.getPythonResolver;
 const removeResolverSession = PythonResolverModule.removeResolverSession;
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const logger = require('./logger');
+const logger = require('./src/logger');
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -485,7 +485,7 @@ app.get('/:resource/:type/:id/:extra?.json', async (req, res, next) => {
 
 //route download template
 app.get('/api/resolver/download-template', (req, res) => {
-    const PythonResolver = require('./python-resolver');
+    const PythonResolver = require('./src/python-resolver');
     const fs = require('fs');
 
     try {
